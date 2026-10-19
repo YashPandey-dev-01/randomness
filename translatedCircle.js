@@ -1,7 +1,7 @@
 const r = require("raylib");
 
 function degreeToRadian(degree) {
-  return degree * (Math.PI * 180);
+  return degree * (Math.PI / 180);
 }
 
 function generateAngles(n) {
