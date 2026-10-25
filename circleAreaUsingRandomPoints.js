@@ -14,21 +14,30 @@ function generateCoordinates(lowerBound, upperBound, n) {
   return coordinates;
 }
 
-function isInsideCircleBound(circle, coord) {
-  return coord > circle.centreX - circle.radius && coord < circle.centreX + circle.radius;
+function square(x) {
+  return Math.pow(x, 2);
+}
+
+function calcDistanceBetweenPoints(p1, p2) {
+  const horzDistance = p1.x - p2.x;
+  const verDistance = p1.y - p2.y;
+  return Math.sqrt(square(horzDistance) + square(verDistance));
+}
+
+function isPointInsideCircle(centre, radius, point) {
+  const distanceFromCentre = calcDistanceBetweenPoints(centre, point);
+  return distanceFromCentre < radius;
 }
 
 function calcpointsInsideCircle(circle, xCoordinates, yCoordinates) {
-  let points = 0;
+  let pointsInsideCircle = 0;
   for (let i = 0; i < xCoordinates.length; i++) {
-    isPointInsideHorizontally = isInsideCircleBound(circle, xCoordinates[i]);
-    isPointInsideVertically = isInsideCircleBound(circle, yCoordinates[i]);
-
-    if (isPointInsideHorizontally && isPointInsideVertically) {
-      points++;
-    }
+    const point = { x: xCoordinates[i], y: yCoordinates[i] };
+    pointsInsideCircle = isPointInsideCircle(circle.centre, circle.radius, point) ?
+      pointsInsideCircle + 1 :
+      pointsInsideCircle;
   }
-  return points;
+  return pointsInsideCircle;
 }
 
 function calcRectConfig(x1, x2, y1, y2) {
@@ -38,6 +47,11 @@ function calcRectConfig(x1, x2, y1, y2) {
     width: x2 - x1,
     height: y2 - y1
   }
+}
+
+function calcCircleArea(rectObj, numOfPoints, pointsInsideCircle) {
+  rectArea = rectObj.width * rectObj.height;
+  return (rectArea * pointsInsideCircle) / numOfPoints;
 }
 
 function setup() {
@@ -55,31 +69,32 @@ function setup() {
   const y2 = 700;
   const rectObj = calcRectConfig(x1, x2, y1, y2);
 
-  const numOfPoints = 10;
+  const numOfPoints = 10000;
   const pointSize = 1;
 
   const xCoordinates = generateCoordinates(x1, x2, numOfPoints);
   const yCoordinates = generateCoordinates(y1, y2, numOfPoints);
 
   const circle = {
-    centreX: 500,
-    centreY: 450,
-    radius: 200
+    centre: { x: 500, y: 450 },
+    radius: 70
   }
 
   const pointsInsideCircle = calcpointsInsideCircle(circle, xCoordinates, yCoordinates);
-  console.log(pointsInsideCircle)
+  const circleArea = calcCircleArea(rectObj, numOfPoints, pointsInsideCircle);
+
   const colorPallete = {
     bg: r.BLUE,
     point: r.WHITE,
-    boundary: r.BLACK
+    boundary: r.BLACK,
+    text: r.RED
   }
 
   r.SetTraceLogLevel(r.LOG_NONE);
   r.InitWindow(screen.width, screen.height, title);
   r.SetTargetFPS(fps);
 
-  return { screen, xCoordinates, yCoordinates, colorPallete, pointSize, rectObj, circle };
+  return { screen, xCoordinates, yCoordinates, colorPallete, pointSize, rectObj, circle, circleArea };
 }
 
 function drawRandomPoints(world) {
@@ -91,12 +106,21 @@ function drawRandomPoints(world) {
   }
 }
 
+function drawRectangleBoundary(rectObj, color) {
+  r.DrawRectangleLinesEx(rectObj, 3, color);
+}
+
+function drawCircleBoundary(circleObj, color) {
+  r.DrawCircleLines(circleObj.centre.x, circleObj.centre.y, circleObj.radius, color)
+}
+
 function draw(world) {
   r.BeginDrawing();
   r.ClearBackground(world.colorPallete.bg);
 
-  r.DrawRectangleLinesEx(world.rectObj, 3, world.colorPallete.boundary);
-  r.DrawCircleLines(world.circle.centreX, world.circle.centreY, world.circle.radius, world.colorPallete.boundary)
+  drawRectangleBoundary(world.rectObj, world.colorPallete.boundary);
+  drawCircleBoundary(world.circle, world.colorPallete.boundary);
+  r.DrawText("" + world.circleArea, 10, 10, 30, world.colorPallete.text);
   drawRandomPoints(world);
 
   r.EndDrawing();
