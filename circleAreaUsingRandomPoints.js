@@ -21,22 +21,27 @@ function square(x) {
 function calcDistanceBetweenPoints(p1, p2) {
   const horzDistance = p1.x - p2.x;
   const verDistance = p1.y - p2.y;
+
   return Math.sqrt(square(horzDistance) + square(verDistance));
 }
 
 function isPointInsideCircle(centre, radius, point) {
   const distanceFromCentre = calcDistanceBetweenPoints(centre, point);
+
   return distanceFromCentre < radius;
 }
 
 function calcpointsInsideCircle(circle, xCoordinates, yCoordinates) {
   let pointsInsideCircle = 0;
+
   for (let i = 0; i < xCoordinates.length; i++) {
     const point = { x: xCoordinates[i], y: yCoordinates[i] };
+
     pointsInsideCircle = isPointInsideCircle(circle.centre, circle.radius, point) ?
       pointsInsideCircle + 1 :
       pointsInsideCircle;
   }
+
   return pointsInsideCircle;
 }
 
@@ -50,7 +55,8 @@ function calcRectConfig(x1, x2, y1, y2) {
 }
 
 function calcCircleArea(rectObj, numOfPoints, pointsInsideCircle) {
-  rectArea = rectObj.width * rectObj.height;
+  const rectArea = rectObj.width * rectObj.height;
+
   return (rectArea * pointsInsideCircle) / numOfPoints;
 }
 
