@@ -81,7 +81,7 @@ function drawRandomLines(linesXCoord, screenHeight, color) {
 }
 
 function drawGraph(coords, color) {
-  for (let i = 100; i < coords.length - 1; i = i + 100) {
+  for (let i = 100; i < coords.length; i = i + 100) {
     r.DrawLineV(coords[i], coords[i - 100], color);
   }
 }
