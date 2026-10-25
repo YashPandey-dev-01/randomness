@@ -4,7 +4,7 @@ function generateCoordinates(lowerBound, upperBound, n) {
   const coordinates = [];
   const range = upperBound - lowerBound;
 
-  for (let i = 0; i < n; i++) {
+  for (let coordCount = 0; coordCount < n; coordCount++) {
     const randomNum = Math.random() * range;
     const xCoord = randomNum + lowerBound;
 
@@ -34,8 +34,8 @@ function isPointInsideCircle(centre, radius, point) {
 function calcpointsInsideCircle(circle, xCoordinates, yCoordinates) {
   let pointsInsideCircle = 0;
 
-  for (let i = 0; i < xCoordinates.length; i++) {
-    const point = { x: xCoordinates[i], y: yCoordinates[i] };
+  for (let pointCount = 0; pointCount < xCoordinates.length; pointCount++) {
+    const point = { x: xCoordinates[pointCount], y: yCoordinates[pointCount] };
 
     pointsInsideCircle = isPointInsideCircle(circle.centre, circle.radius, point) ?
       pointsInsideCircle + 1 :
@@ -104,9 +104,9 @@ function setup() {
 }
 
 function drawRandomPoints(world) {
-  for (let i = 0; i < world.xCoordinates.length; i++) {
-    const x = world.xCoordinates[i];
-    const y = world.yCoordinates[i];
+  for (let pointCount = 0; pointCount < world.xCoordinates.length; pointCount++) {
+    const x = world.xCoordinates[pointCount];
+    const y = world.yCoordinates[pointCount];
 
     r.DrawCircle(x, y, world.pointSize, world.colorPallete.point);
   }

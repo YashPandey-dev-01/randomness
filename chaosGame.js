@@ -8,10 +8,10 @@ function chooseRandomCorner(triangle) {
 }
 
 function defineMultiplePoints(triangle, points, numOfPoints) {
-  for (let i = 0; i < numOfPoints - 1; i++) {
+  for (let currPoint = 0; currPoint < numOfPoints - 1; currPoint++) {
     const corner = chooseRandomCorner(triangle);
-    const pointX = (points[i].x + corner.x) / 2;
-    const pointY = (points[i].y + corner.y) / 2;
+    const pointX = (points[currPoint].x + corner.x) / 2;
+    const pointY = (points[currPoint].y + corner.y) / 2;
 
     points.push({ x: pointX, y: pointY });
   }

@@ -7,7 +7,7 @@ function calcAvg(num1, num2, num3, num4) {
 function generateXCoordinates(upperBound, n) {
   const xCoordinates = [];
 
-  for (let i = 0; i < n; i++) {
+  for (let coordCount = 0; coordCount < n; coordCount++) {
     const randomNum = Math.random() * upperBound;
     const randomNum2 = Math.random() * upperBound;
     const randomNum3 = Math.random() * upperBound;

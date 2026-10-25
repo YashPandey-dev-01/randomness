@@ -3,7 +3,7 @@ const r = require("raylib");
 function generateCoordinates(upperBound, n) {
   const coordinates = [];
 
-  for (let i = 0; i < n; i++) {
+  for (let coordCount = 0; coordCount < n; coordCount++) {
     const randomNum = Math.random() * upperBound;
 
     coordinates.push(randomNum);
@@ -42,9 +42,9 @@ function setup() {
 }
 
 function drawRandomPoints(world) {
-  for (let i = 0; i < world.xCoordinates.length; i++) {
-    const x = world.xCoordinates[i];
-    const y = world.yCoordinates[i];
+  for (let coordNum = 0; coordNum < world.xCoordinates.length; coordNum++) {
+    const x = world.xCoordinates[coordNum];
+    const y = world.yCoordinates[coordNum];
 
     r.DrawCircle(x, y, world.pointSize, world.colorPallete.point);
   }

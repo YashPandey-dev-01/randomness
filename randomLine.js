@@ -3,7 +3,7 @@ const r = require("raylib");
 function generateXCoordinates(upperBound, n) {
   const xCoordinates = [];
 
-  for (let i = 0; i < n; i++) {
+  for (let coordCount = 0; coordCount < n; coordCount++) {
     const randomNum = Math.random() * upperBound;
 
     xCoordinates.push(randomNum);

@@ -7,7 +7,7 @@ function degreeToRadian(degree) {
 function generateAngles(n) {
   const angles = [];
 
-  for (let i = 0; i < n; i++) {
+  for (let angleCount = 0; angleCount < n; angleCount++) {
     const randomNum = Math.random() * 360;
     const angle = degreeToRadian(randomNum);
 
@@ -66,9 +66,9 @@ function setup() {
 }
 
 function drawRandomPoints(world) {
-  for (let i = 0; i < world.coordinates.length; i++) {
-    const x = world.coordinates[i].x;
-    const y = world.coordinates[i].y;
+  for (let pointCount = 0; pointCount < world.coordinates.length; pointCount++) {
+    const x = world.coordinates[pointCount].x;
+    const y = world.coordinates[pointCount].y;
 
     r.DrawCircle(x, y, world.pointSize, world.colorPallete.point);
   }

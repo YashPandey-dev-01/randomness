@@ -15,7 +15,7 @@ function generateCoordinates(paralleogram, numOfPoints) {
   const verUpperBound = paralleogram.y1 + paralleogram.height;
   const verRange = verUpperBound - verLowerBound;
 
-  for (let i = 0; i < numOfPoints; i++) {
+  for (let pointCount = 0; pointCount < numOfPoints; pointCount++) {
     const horzRandomNum = Math.random() * horzRange;
     const verRandomNum = Math.random() * verRange;
 
@@ -63,9 +63,9 @@ function setup() {
 }
 
 function drawRandomPoints(world) {
-  for (let i = 0; i < world.coordinates.length; i++) {
-    const x = world.coordinates[i].x;
-    const y = world.coordinates[i].y;
+  for (let coordNum = 0; coordNum < world.coordinates.length; coordNum++) {
+    const x = world.coordinates[coordNum].x;
+    const y = world.coordinates[coordNum].y;
 
     r.DrawCircle(x, y, world.pointSize, world.colorPallete.point);
   }

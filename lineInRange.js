@@ -4,7 +4,7 @@ function generateXCoordinates(lowerBound, upperBound, n) {
   const xCoordinates = [];
   const range = upperBound - lowerBound;
 
-  for (let i = 0; i < n; i++) {
+  for (let coordCount = 0; coordCount < n; coordCount++) {
     const randomNum = Math.random() * range;
     const xCoord = randomNum + lowerBound;
 

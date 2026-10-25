@@ -7,7 +7,7 @@ function calcAvg(num1, num2, num3, num4) {
 function generatelinesXCoord(upperBound, n) {
   const linesXCoord = [];
 
-  for (let i = 0; i < n; i++) {
+  for (let coordCount = 0; coordCount < n; coordCount++) {
     const randomNum = Math.random() * upperBound;
     const randomNum2 = Math.random() * upperBound;
     const randomNum3 = Math.random() * upperBound;
@@ -22,15 +22,15 @@ function generatelinesXCoord(upperBound, n) {
 }
 
 function initializeGraphCoords(coords, horzAxisUpperBound, horzAxisStart) {
-  for (let i = 0; i <= horzAxisUpperBound; i++) {
-    coords[i] = { x: i, y: horzAxisStart };
+  for (let idx = 0; idx <= horzAxisUpperBound; idx++) {
+    coords[idx] = { x: idx, y: horzAxisStart };
   }
   return coords;
 }
 
 function calcGraphYCoords(coords, linesXCoord) {
-  for (let i = 0; i < linesXCoord.length; i++) {
-    const coordsIdx = Math.trunc(linesXCoord[i]);
+  for (let lineCount = 0; lineCount < linesXCoord.length; lineCount++) {
+    const coordsIdx = Math.trunc(linesXCoord[lineCount]);
     coords[coordsIdx].y = coords[coordsIdx].y - 1;
   }
   return coords;
@@ -81,8 +81,8 @@ function drawRandomLines(linesXCoord, screenHeight, color) {
 }
 
 function drawGraph(coords, color) {
-  for (let i = 100; i < coords.length; i = i + 100) {
-    r.DrawLineV(coords[i], coords[i - 100], color);
+  for (let coordNum = 100; coordNum < coords.length; coordNum = coordNum + 100) {
+    r.DrawLineV(coords[coordNum], coords[coordNum - 100], color);
   }
 }
 
