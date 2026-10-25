@@ -25,7 +25,6 @@ function initializeGraphCoords(coords, horzAxisUpperBound, horzAxisStart) {
   for (let i = 0; i <= horzAxisUpperBound; i++) {
     coords[i] = { x: i, y: horzAxisStart };
   }
-
   return coords;
 }
 
@@ -34,7 +33,6 @@ function calcGraphYCoords(coords, linesXCoord) {
     const coordsIdx = Math.trunc(linesXCoord[i]);
     coords[coordsIdx].y = coords[coordsIdx].y - 1;
   }
-
   return coords;
 }
 
@@ -83,8 +81,8 @@ function drawRandomLines(linesXCoord, screenHeight, color) {
 }
 
 function drawGraph(coords, color) {
-  for (let i = 0; i < coords.length - 1; i++) {
-    r.DrawLineV(coords[i], coords[i + 1], color);
+  for (let i = 100; i < coords.length - 1; i = i + 100) {
+    r.DrawLineV(coords[i], coords[i - 100], color);
   }
 }
 
