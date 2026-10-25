@@ -1,5 +1,9 @@
 const r = require("raylib");
 
+function degreeToRadian(degree) {
+  return degree * (Math.PI / 180);
+}
+
 function generateCoordinates(paralleogram, numOfPoints) {
   const coordinates = [];
 
@@ -14,12 +18,13 @@ function generateCoordinates(paralleogram, numOfPoints) {
   for (let i = 0; i < numOfPoints; i++) {
     const horzRandomNum = Math.random() * horzRange;
     const verRandomNum = Math.random() * verRange;
-    const triangleBase = verRandomNum / Math.tan(90);
-    const xCoord = horzRandomNum + horzLowerBound + triangleBase;
-    console.log(xCoord, verRandomNum);
+
+    const baseAngle = degreeToRadian(180 - paralleogram.angle);
+    const horzOffset = verRandomNum / Math.tan(baseAngle);
+    const xCoord = horzRandomNum + horzLowerBound - horzOffset;
+
     coordinates.push({ x: xCoord, y: verRandomNum + verLowerBound });
   }
-
   return coordinates;
 }
 
@@ -33,54 +38,30 @@ function setup() {
   const fps = 10;
 
   const paralleogram = {
-    width: 500,
+    width: 600,
     height: 300,
-    x1: 500,
-    y1: 200
+    angle: 110,
+    x1: 200,
+    y1: 20,
   }
 
-  const numOfPoints = 100;
+  const numOfPoints = 1000;
   const pointSize = 10;
 
   const coordinates = generateCoordinates(paralleogram, numOfPoints);
 
   const colorPallete = {
     bg: r.BLUE,
-    point: { r: 255, g: 255, b: 255, a: 100 }
+    point: { r: 215, g: 215, b: 0, a: 150 }
   }
 
   r.SetTraceLogLevel(r.LOG_NONE);
   r.InitWindow(screen.width, screen.height, title);
   r.SetTargetFPS(fps);
 
-  return { screen, coordinates, colorPallete, pointSize, paralleogram };
+  return { coordinates, colorPallete, pointSize };
 }
 
-function drawParalleogram(world) {
-  const point1 = {
-    x: world.paralleogram.x1,
-    y: world.paralleogram.y1,
-  }
-  const point2 = {
-    x: world.paralleogram.x1 + world.paralleogram.width,
-    y: point1.y,
-  }
-
-  const triangleBase = world.paralleogram.height / Math.tan(90);
-  const point3 = {
-    x: world.paralleogram.x1 + triangleBase,
-    y: world.paralleogram.y1 + world.paralleogram.height,
-  }
-  const point4 = {
-    x: point3.x + world.paralleogram.width,
-    y: point3.y,
-  }
-
-  r.DrawLineEx(point1, point2, 5, r.BLACK);
-  r.DrawLineEx(point2, point4, 5, r.BLACK);
-  r.DrawLineEx(point4, point3, 5, r.BLACK);
-  r.DrawLineEx(point3, point1, 5, r.BLACK);
-}
 function drawRandomPoints(world) {
   for (let i = 0; i < world.coordinates.length; i++) {
     const x = world.coordinates[i].x;
@@ -94,7 +75,6 @@ function draw(world) {
   r.BeginDrawing();
   r.ClearBackground(world.colorPallete.bg);
 
-  drawParalleogram(world);
   drawRandomPoints(world);
 
   r.EndDrawing();
